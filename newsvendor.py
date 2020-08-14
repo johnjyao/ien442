@@ -23,31 +23,49 @@ class Newsvendor:
     def __init__(self, dist_name='discrete uniform'):
         self.dist_name = dist_name
         if dist_name == 'discrete uniform':
-            self.params = {'min_demand': 0, 'max_demand': 19}
-            self.min_order = self.params['min_demand']
-            self.max_order = self.params['max_demand']
-            self.dist = stats.randint
-            self.dist_kwargs = {'low': self.params['min_demand'], 'high': self.params['max_demand']+1}
-            self.expect_kwargs = {'args': (self.params['min_demand'], self.params['max_demand']+1)}
+            self.set_disc_unif_demand(min_demand=0, max_demand=19)
+        elif dist_name == 'exponential':
+            self.set_exp_demand(lam=0.1)
+        elif dist_name == 'continuous uniform':
+            self.set_cont_unif_demand(min_demand=0, max_demand=20)
+        else:
+            raise TypeError('Demand distribution "' + dist_name + '" not currently supported.')
 
-        if dist_name == 'exponential':
-            self.params = {'lambda': 0.1}
-            self.dist = stats.expon
-            self.dist_kwargs = {'scale': 1./self.params['lambda']}
-            self.expect_kwargs = self.dist_kwargs
-            self.min_order = 0
-            self.max_order = 25
+    def set_disc_unif_demand(self, min_demand, max_demand):
+        self.dist_name = 'discrete uniform'
+        self.params = {'min_demand': min_demand, 'max_demand': max_demand}
+        self.min_order = self.params['min_demand']
+        self.max_order = self.params['max_demand']
 
-        if dist_name == 'continuous uniform':
-            self.params = {'min_demand': 0, 'max_demand': 19}
-            self.min_order = self.params['min_demand']
-            self.max_order = self.params['max_demand']
-            self.dist = stats.uniform
-            self.dist_kwargs = {
-                'loc': self.params['min_demand'], 
-                'scale': self.params['max_demand'] - self.params['min_demand'],
-            }
-            self.expect_kwargs = self.dist_kwargs
+        self.dist = stats.randint
+        self.dist_kwargs = {'low': self.params['min_demand'], 'high': self.params['max_demand']+1}
+        self.expect_kwargs = {'args': (self.params['min_demand'], self.params['max_demand']+1)}
+
+    def set_exp_demand(self, lam, max_order=None):
+        self.dist_name = 'exponential'
+        self.params = {'lambda': lam}
+        self.min_order = 0
+
+        self.dist = stats.expon
+        self.dist_kwargs = {'scale': 1./self.params['lambda']}
+        self.expect_kwargs = self.dist_kwargs
+
+        if max_order is None:
+            critical_fractile = (self.coeff['retail_price'] - self.coeff['wholesale_cost'])/self.coeff['retail_price']
+            self.max_order = max(20, 2*int(self.dist.ppf(critical_fractile, **self.dist_kwargs)))
+
+    def set_cont_unif_demand(self, min_demand, max_demand):
+        self.dist_name = 'continuous uniform'
+        self.params = {'min_demand': min_demand, 'max_demand': max_demand}
+        self.min_order = self.params['min_demand']
+        self.max_order = self.params['max_demand']
+        self.dist = stats.uniform
+        self.dist_kwargs = {
+            'loc': self.params['min_demand'], 
+            'scale': self.params['max_demand'] - self.params['min_demand'],
+        }
+        self.expect_kwargs = self.dist_kwargs
+
 
     def calc_data(self, D):
         df = pd.DataFrame(D, columns=['demand'])
