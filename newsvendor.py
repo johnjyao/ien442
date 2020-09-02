@@ -164,8 +164,6 @@ def interact_gridplot(plots, calc_func, news, ncols=3, labels = None):
     widgets.interact(update, y=order_qty_slider)
     handle = show(gridplot([plots[field] for field in fields], ncols=ncols), notebook_handle=True)
 
-
-
 def order_qty_interact(func, news):
     order_qty_slider = widgets.IntSlider(value=news.order_qty, min=news.min_order, max=news.max_order, description='Order Qty')
     widgets.interact(func, y=order_qty_slider)
