@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="432" height="288" viewBox="0, 0, 432, 288">
+  <g id="maze">
+    <path d="M12.5,12.5 L420.5,12.5 L420.5,276.5 L12.5,276.5 z" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M216.5,12.5 L216.5,48.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M216.5,276.5 L216.5,240.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M216.5,96.5 L216.5,192.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M12.5,144.5 L84.5,144.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M420.5,144.5 L348.5,144.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M132.5,144.5 L300.5,144.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M204.5,48.5 L228.5,48.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M204.5,96.5 L228.5,96.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M300.5,132.5 L300.5,156.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M348.5,132.5 L348.5,156.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M204.5,192.5 L228.5,192.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M204.5,240.5 L228.5,240.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M132.5,132.5 L132.5,156.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <path d="M84.5,132.5 L84.5,156.5" fill-opacity="0" stroke="#000000" stroke-width="5"/>
+    <text text-anchor="middle" x="108" y="80" dominant-baseline="central" font-family="Helvetica,sans-serif" font-size="50">1</text>
+    <text text-anchor="middle" x="324" y="80" dominant-baseline="central" font-family="Helvetica,sans-serif" font-size="50">2</text>
+    <text text-anchor="middle" x="324" y="212" dominant-baseline="central" font-family="Helvetica,sans-serif" font-size="50">3</text>
+    <text text-anchor="middle" x="108" y="212" dominant-baseline="central" font-family="Helvetica,sans-serif" font-size="50">4</text>
+  </g>
+</svg>
