@@ -229,7 +229,7 @@ def plot_path(path, S, name=None, show_line=False, line_color="silver"):
     return plt, handle
     # return plt, handle, time_marker
 
-def draw_rat_maze(room, maze_file='maze.svg'):
+def draw_rat_maze(room, maze_file='Maze.svg'):
     svg = ET.Element('svg', width="432", height="300")
     maze = ET.parse(maze_file).getroot().find(".//*[@id='maze']")
     svg.append(maze)
