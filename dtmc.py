@@ -3,8 +3,9 @@ import pandas as pd
 import functools
 from fractions import Fraction
 
+import ipywidgets as widgets
+
 from IPython.display import Math, SVG, display, clear_output
-from fractions import Fraction
 import xml.etree.ElementTree as ET
 ET.register_namespace("", "http://www.w3.org/2000/svg")
 
@@ -12,7 +13,7 @@ import bokeh.plotting as bplt
 from bokeh.models import Range1d, LabelSet, ColumnDataSource
 from bokeh.models import Arrow, TeeHead, VeeHead, NormalHead, OpenHead
 from bokeh.models import Whisker, Span
-from bokeh.models.glyphs import Step
+from bokeh.models.glyphs import Step, VBar
 from bokeh.models.markers import Circle
 from bokeh.io import output_notebook, show, push_notebook
 output_notebook()
@@ -20,6 +21,31 @@ output_notebook()
 def disp_dtmc(P, S, frac=False, max_denom = 100):
     display(Math(r'\mathcal{S} = \{' + ','.join(map(str,S)) + '\}'))
     display(Math(r'\mathbf{P} = ' + pmatrix(P, frac=frac, max_denom=max_denom)))
+
+def dist_interact(P, S, d_0, n=50):
+    # Interactively plot the unconditional distribution of X_n where {X_n, n >= 0} is a DTMC
+    xlabels = list(map(str,S))
+    p = bplt.figure(x_range=xlabels) # Create a Bokeh figure
+    source = ColumnDataSource(data=dict(x=xlabels, top=d_0)) # Start with d_0
+    glyph = VBar(x="x", top="top", bottom=0, width=0.8, fill_color='blue') # Specify a vertical bar plot
+    labels = LabelSet(x='x', y='top', text='top', text_align='center', source=source) # Label each bar with the value
+    p.add_glyph(source, glyph)
+    p.add_layout(labels)
+    p.yaxis.axis_label = 'd_n'
+    p.y_range=Range1d(0,1)
+    handle = None
+    
+    def update(n):
+        # Function for updating the data and pushing to the figure handle
+        source.data['top'] = np.round(np.dot(d_0, np.linalg.matrix_power(P, n)), 4)
+        if handle is not None:
+            push_notebook(handle=handle)
+    
+    display(Math(r'$d_0 = '+pmatrix([d_0], frac=True)+'$')) # Display initial distribution
+    
+    # Interactive slider and plot
+    widgets.interact(update, n=widgets.IntSlider(value=0, min=0, max=n, description='n'))
+    handle = show(p, notebook_handle=True)
 
 def sim_path(P, d_0, paths=1, steps=0, S=None):
     # Simulate a sample path of a discrete-time Markov chain given by
