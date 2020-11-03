@@ -13,9 +13,9 @@ from bokeh.models.markers import Circle
 from bokeh.io import output_notebook, show, push_notebook
 ## LaTeX formatted string output
 
-def disp_ctmc(P, v, frac=False, max_denom = 100):
+def disp_ctmc(P, S, v, frac=False, max_denom = 100):
     P_mat_str = r'\mathbf{P} = ' + dtmc.pmatrix(P, frac=frac, max_denom=max_denom)
-    v_str = r'\begin{matrix}'+ r'\\ '.join([f'v_{i} = {el}' for (i, el) in enumerate(v)])+ r'\end{matrix}'
+    v_str = r'\begin{matrix}'+ r'\\ '.join([f'v_{i} = {el}' for (i, el) in zip(S, v)])+ r'\end{matrix}'
     display(Math(P_mat_str + r'\qquad' + v_str))
 
 def sim_path(P, v, d_0, paths=1, steps=0, S=None):
