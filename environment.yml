@@ -1,0 +1,14 @@
+name: ien
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7
+  - jupyter
+  - numpy=1.17
+  - scipy=1.3
+  - pandas=1.1
+  - ipywidgets
+  - bokeh=1.3
+  - graphviz=2.40
+  - python-graphviz=0.14
